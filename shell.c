@@ -13,6 +13,15 @@ Contoh masukan dan keluaran
     $ exit
 */
 
+
+/*
+ANGGOTA KELOMPOK:
+G64190061 Bobby Williams K. Hara
+G64190069 Rizal Mujahiddan
+G64190072 Matthew Martianus Henry
+G64190105 Maxdha Maxiwinata
+
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,8 +53,6 @@ int main()
         printf("$ %s : ", getcwd(cwd, sizeof(cwd)));
           fgets(cmd, 1000, stdin);
         //  baca string perintah
-        // jika string kosong maka lanjut ke bawahnya
-        // jika tidak kosong, maka record apa yang terdapat pada string
         if(*cmd != '\n')
         {
             kosong++;
@@ -77,8 +84,10 @@ int main()
             if(!strcmp(args[1], "-"))
             {
                 chdir("..");
+                continue;
             }
             chdir(args[1]);
+            continue;
         }
 
         //  buat proses child:
@@ -96,9 +105,15 @@ int main()
         {
             if(!strcmp(args[0],"history")){
                  for(long int i = 0; i<= kosong; i++){
-                     printf("%ld %s", i, pendata[i]);
+                     printf("%ld %s", i + 1, pendata[i]);
                  }
+                 break;
              }
+            if(execvp(args[0], args) < 0)
+            {
+                printf("%s : No such file or directory!\n", args[0]);
+                break;
+            }
             execvp(args[0], args);
             break;
         }
